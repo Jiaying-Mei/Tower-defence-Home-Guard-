@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/exit icon.png</file>
+        <file>image/icon.png</file>
+        <file>image/intro icon.png</file>
+        <file>image/level selection.png</file>
+        <file>image/main interface.jpg</file>
+        <file>image/start icon.png</file>
+        <file>audio/Faster2.mp3</file>
+        <file>audio/Faster1.mp3</file>
+        <file>image/level_1 icon.png</file>
+        <file>image/level_2 icon.png</file>
+    </qresource>
+</RCC>
