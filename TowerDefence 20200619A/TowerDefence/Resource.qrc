@@ -1,0 +1,46 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/exit icon.png</file>
+        <file>image/icon.png</file>
+        <file>image/intro icon.png</file>
+        <file>image/level selection.png</file>
+        <file>image/main interface.jpg</file>
+        <file>image/start icon.png</file>
+        <file>audio/Faster2.mp3</file>
+        <file>audio/Faster1.mp3</file>
+        <file>image/level_1 icon.png</file>
+        <file>image/level_2 icon.png</file>
+        <file>image/back icon.png</file>
+        <file>image/level1map.jpg</file>
+        <file>image/level2map.jpg</file>
+        <file>image/introduction.png</file>
+        <file>image/continue icon.png</file>
+        <file>image/pause icon.png</file>
+        <file>image/restart icon.png</file>
+        <file>image/towerposition.png</file>
+        <file>image/towerpositionselected.png</file>
+        <file>image/coin icon.png</file>
+        <file>image/health icon.png</file>
+        <file>image/lost.png</file>
+        <file>image/win.png</file>
+        <file>image/build tower1.png</file>
+        <file>image/build tower2.png</file>
+        <file>image/build tower3.png</file>
+        <file>image/tower11.png</file>
+        <file>image/tower12.png</file>
+        <file>image/remove tower.png</file>
+        <file>image/upgrade tower.png</file>
+        <file>image/enemy1.gif</file>
+        <file>image/tower21.png</file>
+        <file>image/tower31.png</file>
+        <file>image/tower32.png</file>
+        <file>image/tower33.png</file>
+        <file>image/enemy2.gif</file>
+        <file>image/enemy3.gif</file>
+        <file>image/bullet11.gif</file>
+        <file>image/bullet12.gif</file>
+        <file>image/bullet31.gif</file>
+        <file>image/bullet32.gif</file>
+        <file>image/bullet33.gif</file>
+    </qresource>
+</RCC>
