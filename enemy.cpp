@@ -117,6 +117,7 @@ void EnemyManager::checkHP() {
                 this->core->gamemanager->giveCoin(e->getReward());
                 this->core->menumanager->showReward(e->getReward());
                 this->core->audiomanager->playEnemyDie();
+                this->core->audiomanager->playGainSunshine();
                 delete e;
             } else
                 tmp.push(e);
@@ -152,9 +153,10 @@ void EnemyManager::run() {
             e->move();
             if (!e->refreshE(this->core)) {
                 e->remove(this->core);
-                if (this->core->gamemanager->hasHealth(e->getDamage()))
+                if (this->core->gamemanager->hasHealth(e->getDamage())) {
+                    this->core->audiomanager->playEnemyAtHome();
                     this->core->gamemanager->takeHealth(e->getDamage());
-                else {
+                } else {
                     this->core->gamemanager->setHealth(0);
                     this->core->gamemanager->showSettlement("defeat");
                 }

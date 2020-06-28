@@ -139,8 +139,11 @@ ButtonManager::ButtonManager(Core *aCore) {
     //Game Buttons
     this->game_bg = new AcidButton("game bg", aCore->pathprefix + "image/level1map.jpg", &aCore->menumanager->GameScene, 0, 0, aCore->conf->ggame->scene_width, aCore->conf->ggame->scene_height);
     this->game_cp = new AcidButton("game cp", aCore->pathprefix + "image/continue icon.png", &aCore->menumanager->GameScene, aCore->conf->ggame->cp_x, aCore->conf->ggame->cp_y, aCore->conf->ggame->cp_width, aCore->conf->ggame->cp_height);
+    this->game_cp->getItem()->setZValue(1);
     this->game_restart = new AcidButton("game restart", aCore->pathprefix + "image/restart icon.png", &aCore->menumanager->GameScene, aCore->conf->ggame->restart_x, aCore->conf->ggame->restart_y, aCore->conf->ggame->restart_width, aCore->conf->ggame->restart_height);
+    this->game_restart->getItem()->setZValue(1);
     this->game_back = new AcidButton("game back", aCore->pathprefix + "image/back icon.png", &aCore->menumanager->GameScene, aCore->conf->ggame->back_x, aCore->conf->ggame->back_y, aCore->conf->ggame->back_width, aCore->conf->ggame->back_height);
+    this->game_back->getItem()->setZValue(1);
     this->game_selection = new AcidButton("game selection", aCore->pathprefix + "image/towerpositionselected.png", &aCore->menumanager->GameScene, 1, 1, aCore->conf->ggame->selection_width, aCore->conf->ggame->selection_height);
     aCore->menumanager->GameScene.removeItem(this->game_selection->getItem());
     this->game_coin = new AcidButton("game coin", aCore->pathprefix + "image/coin icon.png", &aCore->menumanager->GameScene, aCore->conf->ggame->coin_x, aCore->conf->ggame->coin_y, aCore->conf->ggame->coin_width, aCore->conf->ggame->coin_height);
@@ -162,6 +165,8 @@ ButtonManager::ButtonManager(Core *aCore) {
     this->game_progressbar2 = new AcidButton("game pb2", aCore->pathprefix + "image/progress bar 2.png", &aCore->menumanager->GameScene, aCore->conf->ggame->progressbarinside_x, aCore->conf->ggame->progressbarinside_y, aCore->conf->ggame->progressbarinside_width, aCore->conf->ggame->progressbarinside_height);
     this->game_progressbar3 = new AcidButton("game pb3", aCore->pathprefix + "image/progress bar 3.png", &aCore->menumanager->GameScene, aCore->conf->ggame->progressbar_x, aCore->conf->ggame->progressbar_y, aCore->conf->ggame->progressbar_width, aCore->conf->ggame->progressbar_height);
     this->game_progressbar4 = new AcidButton("game pb4", aCore->pathprefix + "image/progress bar 4.png", &aCore->menumanager->GameScene, aCore->conf->ggame->progressbarhead_x, aCore->conf->ggame->progressbarhead_y, aCore->conf->ggame->progressbarhead_width, aCore->conf->ggame->progressbarhead_height);
+    this->game_rangeof = new AcidButton("game rangeof", aCore->pathprefix + "image/rangeoff.png", &aCore->menumanager->GameScene, aCore->conf->ggame->rangeof_x, aCore->conf->ggame->rangeof_y, aCore->conf->ggame->rangeof_width, aCore->conf->ggame->rangeof_height);
+    this->game_rangeof->getItem()->setZValue(1);
     //Game Texts
     aCore->menumanager->game_cointext = aCore->menumanager->GameScene.addText("500");
     aCore->menumanager->game_cointext->setDefaultTextColor(QColor(Qt::yellow));
@@ -202,7 +207,7 @@ void ButtonManager::refresh(Core *aCore) {
     this->game_health->refresh(aCore->conf->ggame->health_x, aCore->conf->ggame->health_y, aCore->conf->ggame->health_width, aCore->conf->ggame->health_height);
     this->game_progressbar1->refresh(aCore->conf->ggame->progressbar_x, aCore->conf->ggame->progressbar_y, aCore->conf->ggame->progressbar_width, aCore->conf->ggame->progressbar_height);
     this->game_progressbar3->refresh(aCore->conf->ggame->progressbar_x, aCore->conf->ggame->progressbar_y, aCore->conf->ggame->progressbar_width, aCore->conf->ggame->progressbar_height);
-
+    this->game_rangeof->refresh(aCore->conf->ggame->rangeof_x, aCore->conf->ggame->rangeof_y, aCore->conf->ggame->rangeof_width, aCore->conf->ggame->rangeof_height);
     //Game Texts
     aCore->menumanager->game_cointext->setPos(aCore->conf->ggame->coin_x+aCore->conf->ggame->coin_width, aCore->conf->ggame->coin_y);
     aCore->menumanager->game_cointext->setFont(QFont("Courier New" , aCore->conf->ggame->coinfont, QFont::Bold));
@@ -214,18 +219,22 @@ void ButtonManager::refresh(Core *aCore) {
 
 void ButtonManager::clickMainInterface(Core *aCore, QGraphicsItem *citem) {
     if (this->mi_intro->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->menumanager->showIntroduction();
         return;
     }
     if (this->mi_start->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->menumanager->showLevelSelection();
         return;
     }
     if (this->mi_exit->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->exit();
         return;
     }
     if (this->mi_debug->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->menumanager->buttonmanager->toggleDebug(aCore);
         return;
     }
@@ -233,6 +242,7 @@ void ButtonManager::clickMainInterface(Core *aCore, QGraphicsItem *citem) {
 
 void ButtonManager::clickIntroduction(Core *aCore, QGraphicsItem *citem) {
     if (this->bi_back->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->menumanager->showMainInterface();
         return;
     }
@@ -240,14 +250,17 @@ void ButtonManager::clickIntroduction(Core *aCore, QGraphicsItem *citem) {
 
 void ButtonManager::clickLevelSelection(Core *aCore, QGraphicsItem *citem) {
     if (this->ls_level_1->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->gamemanager->loadLevel("level-1");
         return;
     }
     if (!aCore->lock&&this->ls_level_2->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->gamemanager->loadLevel("level-2");
         return;
     }
     if (this->ls_back->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->menumanager->showMainInterface();
         return;
     }
@@ -255,22 +268,32 @@ void ButtonManager::clickLevelSelection(Core *aCore, QGraphicsItem *citem) {
 
 void ButtonManager::clickGame(Core *aCore, QGraphicsItem *citem) {
     if (this->game_restart->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->gamemanager->reloadLevel();
         return;
     }
     if (this->game_back->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->menumanager->showLevelSelection();
+        return;
+    }
+    if (this->game_rangeof->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
+        aCore->gamemanager->toggleIsShowRange();
         return;
     }
     if (aCore->gamemanager->getIsInSettlement()) return;
     if (this->game_cp->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         aCore->gamemanager->toggleCP();
         return;
     }
     if (this->game_bt1->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         if (aCore->gamemanager->hasCoin(aCore->conf->tsi->tower1->upgradecost[0])) {
             aCore->gamemanager->takeCoin(aCore->conf->tsi->tower1->upgradecost[0]);
             aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->setTower(aCore->conf->tsi->tower1->towername, aCore->conf->tsi->tower1->imageurl[0], 1, aCore->conf->tsi->tower1->cooldown[0], aCore->conf->tsi->tower1->bullet[0]);
+            aCore->gamemanager->refreshSelectedTowerRangeAB();
             aCore->gamemanager->setSelection(-1);
             aCore->menumanager->game_log->setPlainText("Plant Primary Mushroom!");
         } else {
@@ -281,9 +304,11 @@ void ButtonManager::clickGame(Core *aCore, QGraphicsItem *citem) {
         return;
     }
     if (this->game_bt2->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         if (aCore->gamemanager->hasCoin(aCore->conf->tsi->tower2->upgradecost[0])) {
             aCore->gamemanager->takeCoin(aCore->conf->tsi->tower2->upgradecost[0]);
             aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->setTower(aCore->conf->tsi->tower2->towername, aCore->conf->tsi->tower2->imageurl[0], 1, aCore->conf->tsi->tower2->cooldown[0], aCore->conf->tsi->tower2->bullet[0]);
+            aCore->gamemanager->refreshSelectedTowerRangeAB();
             aCore->gamemanager->setSelection(-1);
             aCore->menumanager->game_log->setPlainText("Plant Sunflower!");
         } else {
@@ -294,9 +319,11 @@ void ButtonManager::clickGame(Core *aCore, QGraphicsItem *citem) {
         return;
     }
     if (this->game_bt3->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         if (aCore->gamemanager->hasCoin(aCore->conf->tsi->tower3->upgradecost[0])) {
             aCore->gamemanager->takeCoin(aCore->conf->tsi->tower3->upgradecost[0]);
             aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->setTower(aCore->conf->tsi->tower3->towername, aCore->conf->tsi->tower3->imageurl[0], 1, aCore->conf->tsi->tower3->cooldown[0], aCore->conf->tsi->tower3->bullet[0]);
+            aCore->gamemanager->refreshSelectedTowerRangeAB();
             aCore->gamemanager->setSelection(-1);
             aCore->menumanager->game_log->setPlainText("Plant Primary PeaShooter!");
         } else {
@@ -307,11 +334,13 @@ void ButtonManager::clickGame(Core *aCore, QGraphicsItem *citem) {
         return;
     }
     if (this->game_upgrade->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
         Tower_Data *tmptd = aCore->conf->tsi->getTower(aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->getType());
         int tmplevel = aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->getLevel();
         if (aCore->gamemanager->hasCoin(tmptd->upgradecost[tmplevel])) {
             aCore->gamemanager->takeCoin(tmptd->upgradecost[tmplevel]);
             aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->setTower(tmptd->towername, tmptd->imageurl[tmplevel], tmplevel+1, tmptd->cooldown[tmplevel], tmptd->bullet[tmplevel]);
+            aCore->gamemanager->refreshSelectedTowerRangeAB();
             aCore->gamemanager->setSelection(-1);
             aCore->menumanager->game_log->setPlainText("Grow up!");
         } else {
@@ -322,8 +351,11 @@ void ButtonManager::clickGame(Core *aCore, QGraphicsItem *citem) {
         return;
     }
     if (this->game_remove->isEqual(citem)) {
+        aCore->audiomanager->playButtonClick();
+        aCore->audiomanager->playGainSunshine();
         aCore->gamemanager->giveCoin(aCore->conf->tsi->getTower(aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->getType())->demolitionfeedback[aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->getLevel()-1]);
         aCore->gamemanager->towermanager->towers[aCore->gamemanager->getSelection()]->setTower("None", aCore->pathprefix + "image/towerposition.png", 0, 99999999, "None");
+        aCore->gamemanager->refreshSelectedTowerRangeAB();
         aCore->gamemanager->setSelection(-1);
         aCore->menumanager->game_log->setPlainText("Be Removed!");
         return;
@@ -377,6 +409,10 @@ AcidButton* ButtonManager::getGameProgressBarInside() {
 
 AcidButton* ButtonManager::getGameProgressBarHead() {
     return this->game_progressbar4;
+}
+
+AcidButton* ButtonManager::getGameRangeOF() {
+    return this->game_rangeof;
 }
 
 void ButtonManager::hideLock(Core *aCore) {

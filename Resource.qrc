@@ -69,5 +69,14 @@
         <file>image/hiteffect31.png</file>
         <file>image/hiteffect32.png</file>
         <file>image/hiteffect33.png</file>
+        <file>audio/buttonclick.wav</file>
+        <file>audio/frozen.wav</file>
+        <file>audio/gainsunshine.wav</file>
+        <file>audio/zombiecoming.wav</file>
+        <file>image/towerrange.png</file>
+        <file>image/tower2circularanimation.png</file>
+        <file>image/rangeoff.png</file>
+        <file>image/rangeon.png</file>
+        <file>audio/enemyathome.wav</file>
     </qresource>
 </RCC>

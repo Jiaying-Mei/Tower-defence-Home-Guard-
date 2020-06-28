@@ -42,6 +42,21 @@ void AudioManager::build() {
     this->notenoughsuneffect = new QSoundEffect;
     this->notenoughsuneffect->setSource(QUrl("qrc:/audio/NotEnoughSun.wav"));
     this->notenoughsuneffect->setVolume(1.0f);
+    this->frozeneffect = new QSoundEffect;
+    this->frozeneffect->setSource(QUrl("qrc:/audio/frozen.wav"));
+    this->frozeneffect->setVolume(1.0f);
+    this->gainsunshineeffect = new QSoundEffect;
+    this->gainsunshineeffect->setSource(QUrl("qrc:/audio/gainsunshine.wav"));
+    this->gainsunshineeffect->setVolume(1.0f);
+    this->buttonclickeffect = new QSoundEffect;
+    this->buttonclickeffect->setSource(QUrl("qrc:/audio/buttonclick.wav"));
+    this->buttonclickeffect->setVolume(1.0f);
+    this->zombiecomingeffect = new QSoundEffect;
+    this->zombiecomingeffect->setSource(QUrl("qrc:/audio/zombiecoming.wav"));
+    this->zombiecomingeffect->setVolume(1.0f);
+    this->enemyathomeeffect = new QSoundEffect;
+    this->enemyathomeeffect->setSource(QUrl("qrc:/audio/enemyathome.wav"));
+    this->enemyathomeeffect->setVolume(1.0f);
 }
 
 void AudioManager::playBGM() {
@@ -91,4 +106,24 @@ void AudioManager::playEnemyDie() {
 
 void AudioManager::playNotEnoughSun() {
     this->notenoughsuneffect->play();
+}
+
+void AudioManager::playFrozen() {
+    this->frozeneffect->play();
+}
+
+void AudioManager::playGainSunshine() {
+    this->gainsunshineeffect->play();
+}
+
+void AudioManager::playButtonClick() {
+    this->buttonclickeffect->play();
+}
+
+void AudioManager::playZombieComing() {
+    this->zombiecomingeffect->play();
+}
+
+void AudioManager::playEnemyAtHome() {
+    this->enemyathomeeffect->play();
 }

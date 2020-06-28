@@ -17,6 +17,7 @@ GameManager::GameManager() {
     this->isUpgradeShowed = false;
     this->isRemoveShowed = false;
     this->selection = -1;
+    this->isShowRange = false;
     this->towermanager = new TowerManager;
     this->enemymanager = new EnemyManager;
     this->bulletmanager = new BulletManager;
@@ -44,8 +45,11 @@ void GameManager::loadLevel1() {
     this->towers_x = this->core->conf->gl1->tower_x;
     this->towers_y = this->core->conf->gl1->tower_y;
     this->towerscenter = this->core->conf->gl1->towerscenter;
-    for (vector<Wave>::iterator it=this->core->conf->gl1->waves.begin();it!=this->core->conf->gl1->waves.end();it++)
+    for (vector<Wave>::iterator it=this->core->conf->gl1->waves.begin();it!=this->core->conf->gl1->waves.end();it++) {
         this->qw.push(*it);
+        if ((*it).enemytype!="ZombieComingEffect")
+            this->progress_2++;
+    }
     this->route_cnt = 1;
 }
 
@@ -59,8 +63,11 @@ void GameManager::loadLevel2() {
     this->towers_x = this->core->conf->gl2->tower_x;
     this->towers_y = this->core->conf->gl2->tower_y;
     this->towerscenter = this->core->conf->gl2->towerscenter;
-    for (vector<Wave>::iterator it=this->core->conf->gl2->waves.begin();it!=this->core->conf->gl2->waves.end();it++)
+    for (vector<Wave>::iterator it=this->core->conf->gl2->waves.begin();it!=this->core->conf->gl2->waves.end();it++) {
         this->qw.push(*it);
+        if ((*it).enemytype!="ZombieComingEffect")
+            this->progress_2++;
+    }
     this->route_cnt = 2;
 }
 
@@ -75,6 +82,9 @@ void GameManager::loadLevel(string levelname) {
     this->enemymanager->removeAllEnemies();
     this->bulletmanager->removeAllBullets();
     this->hiteffectmanager->removeAllHitEffects();
+    this->animationmanager->removeAllCircularAnimations();
+    this->progress_1 = 0;
+    this->progress_2 = 0;
     if (levelname=="level-1") {
         this->isLoading = true;
         this->level = "level-1";
@@ -96,8 +106,6 @@ void GameManager::loadLevel(string levelname) {
     }
     this->core->menumanager->game_log->setPlainText("Please click on the dotted box to grow plants!");
     this->core->menumanager->showGame();
-    this->progress_1 = 0;
-    this->progress_2 = this->qw.size();
     this->refreshProgressBar();
     this->isLoading = false;
 }
@@ -348,11 +356,43 @@ void GameManager::refreshProgressBar() {
     this->core->menumanager->buttonmanager->getGameProgressBarHead()->refresh(this->core->conf->ggame->progressbarinside_x+(int)(this->core->conf->ggame->progressbarinside_width*process)-this->core->conf->ggame->progressbarhead_dx, this->core->conf->ggame->progressbarhead_y, this->core->conf->ggame->progressbarhead_width, this->core->conf->ggame->progressbarhead_height);
 }
 
+void GameManager::refreshSelectedTowerRangeAB() {
+    if (this->selection<0) return;
+    if (this->level=="level-1")
+        this->towermanager->towers[this->selection]->refreshRangeAB(this->core, this->core->conf->gl1->towerscenter[this->selection]);
+    else
+        this->towermanager->towers[this->selection]->refreshRangeAB(this->core, this->core->conf->gl2->towerscenter[this->selection]);
+}
+
+bool GameManager::getIsShowRange() {
+    return this->isShowRange;
+}
+
+void GameManager::toggleIsShowRange() {
+    if (this->isShowRange) {
+        this->isShowRange = false;
+        this->core->menumanager->buttonmanager->getGameRangeOF()->setPixmap(":/image/rangeoff.png");
+    } else {
+        this->isShowRange = true;
+        this->core->menumanager->buttonmanager->getGameRangeOF()->setPixmap(":/image/rangeon.png");
+    }
+    for (int i = 0; i < *this->tower_cnt; i++)
+        if (this->level=="level-1")
+            this->towermanager->towers[i]->refreshRangeAB(this->core, this->core->conf->gl1->towerscenter[i]);
+        else
+            this->towermanager->towers[i]->refreshRangeAB(this->core, this->core->conf->gl2->towerscenter[i]);
+}
+
 void GameManager::refresh() {
     if (this->isLoading) return;
     if (*this->tower_cnt!=(int)this->towermanager->towers.size()) return;
-    for (int i = 0; i < *this->tower_cnt; i++)
+    for (int i = 0; i < *this->tower_cnt; i++) {
         this->towermanager->towers[i]->refresh(this->towers_x[i], this->towers_y[i], *this->tower_width, *this->tower_height);
+        if (this->level=="level-1")
+            this->towermanager->towers[i]->refreshRangeAB(this->core, this->core->conf->gl1->towerscenter[i]);
+        else
+            this->towermanager->towers[i]->refreshRangeAB(this->core, this->core->conf->gl2->towerscenter[i]);
+    }
     if (this->selection>=0&&this->selection<*this->tower_cnt) {
         this->selection_x = -this->core->conf->ggame->selection_dx+this->towers_x[this->selection];
         this->selection_y = -this->core->conf->ggame->selection_dy+this->towers_y[this->selection];
@@ -365,5 +405,6 @@ void GameManager::refresh() {
     this->enemymanager->refreshAllEnemies();
     this->bulletmanager->refreshAllBullets();
     this->refreshProgressBar();
-    this->hiteffectmanager->removeAllHitEffects();
+    this->hiteffectmanager->refreshAllHitEffects();
+    this->animationmanager->refreshAllCircularAnimations();
 }

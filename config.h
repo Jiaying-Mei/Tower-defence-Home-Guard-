@@ -69,6 +69,7 @@ public:
     int progressbarinside_width, progressbarinside_height, progressbarinside_x, progressbarinside_y;
     int progressbarhead_width, progressbarhead_height, progressbarhead_x, progressbarhead_y, progressbarhead_dx;
     int hiteffect_width, hiteffect_height, hiteffect_dx, hiteffect_dy;
+    int rangeof_width, rangeof_height, rangeof_x, rangeof_y;
 };
 
 struct Wave {
@@ -166,6 +167,19 @@ public:
     HitEffect_Data* getHitEffect(string targethiteffectname);
 };
 
+class CircularAnimation_Data {
+public:
+    string circularanimationname, imageurl;
+    int duration, ir, dr;
+};
+
+class CircularAnimation_Info {
+public:
+    CircularAnimation_Info();
+    CircularAnimation_Data *tower2cad;
+    CircularAnimation_Data* getCircularAnimation(string targetcircularanimationname);
+};
+
 class Config {
 private:
     Core *core;
@@ -186,6 +200,7 @@ public:
     Enemies_Info *esi;
     Bullets_Info *bsi;
     HitEffect_Info *hei;
+    CircularAnimation_Info *cai;
 };
 
 #endif // CONFIG_H

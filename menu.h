@@ -40,7 +40,7 @@ private:
     AcidButton *mi_bg, *mi_intro, *mi_start, *mi_exit, *mi_debug;
     AcidButton *bi_bg, *bi_back;
     AcidButton *ls_bg, *ls_level_1, *ls_level_2, *ls_back, *ls_lock;
-    AcidButton *game_bg, *game_cp, *game_restart, *game_back, *game_selection, *game_coin, *game_health, *game_wl, *game_bt1, *game_bt2, *game_bt3, *game_upgrade, *game_remove, *game_progressbar1, *game_progressbar2, *game_progressbar3, *game_progressbar4;
+    AcidButton *game_bg, *game_cp, *game_restart, *game_back, *game_selection, *game_coin, *game_health, *game_wl, *game_bt1, *game_bt2, *game_bt3, *game_upgrade, *game_remove, *game_progressbar1, *game_progressbar2, *game_progressbar3, *game_progressbar4, *game_rangeof;
 public:
     ButtonManager(Core *aCore);
     void refresh(Core *aCore);
@@ -59,6 +59,7 @@ public:
     AcidButton* getGameRemove();
     AcidButton* getGameProgressBarInside();
     AcidButton* getGameProgressBarHead();
+    AcidButton* getGameRangeOF();
     void hideLock(Core *aCore);
     void toggleDebug(Core *aCore);
 };

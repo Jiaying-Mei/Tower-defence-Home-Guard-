@@ -14,6 +14,7 @@ class Tower:public AcidButton {
 private:
     string type, bulletname;
     int level, cooldown, damage, nowtick;
+    AcidButton *rangeab;
 public:
     Tower(string tname, string tpath, QGraphicsScene *tscene, int pos_x, int pos_y, int ABwidth, int ABheight):AcidButton(tname, tpath, tscene, pos_x, pos_y, ABwidth, ABheight) {
         this->getItem()->setZValue(1);
@@ -22,6 +23,8 @@ public:
         this->cooldown = 99999999;
         this->damage = 0;
         this->nowtick = 0;
+        this->rangeab = new AcidButton("tower range", ":/image/towerrange.png", tscene, 2, 2, 1, 1);
+        this->rangeab->getItem()->setZValue(-1);
     }
     string getType();
     string getBulletName();
@@ -31,6 +34,8 @@ public:
     bool isReady();
     void decreaseNowTick();
     void resetNowTick();
+    void refreshRangeAB(Core *aCore, AcidPoint tcap);
+    AcidButton* getRangeAB();
 };
 
 class TowerManager {
@@ -189,22 +194,49 @@ public:
     void run();
 };
 
+class CircularAnimation:public AcidButton {
+private:
+    string type;
+    int initR, deltaR, nowtick, duration;
+    AcidPoint *center;
+    Config *co;
+public:
+    CircularAnimation(Config *con, CircularAnimation_Data *cad, QGraphicsScene *tscene, int pos_x, int pos_y):AcidButton(cad->circularanimationname, cad->imageurl, tscene, (int)(pos_x*con->nowwratio), (int)(pos_y*con->nowhratio), (int)(cad->ir*2*con->nowwratio), (int)(cad->ir*2*con->nowhratio)) {
+        this->co = con;
+        this->type = cad->circularanimationname;
+        this->nowtick = 0;
+        this->duration = cad->duration;
+        this->initR = cad->ir;
+        this->deltaR = cad->dr;
+        this->center = new AcidPoint(pos_x, pos_y);
+    }
+    void remove(Core *aCore);
+    void increaseNowTick();
+    bool isDurationExceeded();
+    void refreshCA();
+};
+
 class AnimationManager {
 private:
     Core *core;
     bool isRunning;
     QTimer *GameTimer;
+    vector<CircularAnimation*> cas;
 public:
     AnimationManager(Core *aCore);
     void start();
     void stop();
+    void addCircularAnimation(string targetcircularanimation, int p_x, int p_y);
+    void removeAllCircularAnimations();
+    void refreshAllCircularAnimations();
+    void runAllCircularAnimations();
 };
 
 class GameManager {
 private:
     Core *core;
     string level;
-    bool isPaused, isLoading, isInSettlement, isBTShowed, isUpgradeShowed, isRemoveShowed;
+    bool isPaused, isLoading, isInSettlement, isBTShowed, isUpgradeShowed, isRemoveShowed, isShowRange;
     int coin, health, selection, progress_1, progress_2;
     int *initialcoin, *initialhealth, *tower_cnt, *tower_width, *tower_height, *towers_x, *towers_y, *selection_width, *selection_height, selection_x, selection_y;
     void loadLevel1();
@@ -255,6 +287,9 @@ public:
     int getTowerCnt();
     void increaseProgress1();
     void refreshProgressBar();
+    void refreshSelectedTowerRangeAB();
+    bool getIsShowRange();
+    void toggleIsShowRange();
     void refresh();
 };
 

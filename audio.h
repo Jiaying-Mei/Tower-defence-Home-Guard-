@@ -13,7 +13,7 @@ private:
     Core *core;
     QMediaPlaylist *BGMplaylist;
     QMediaPlayer *BGMplayer;
-    QSoundEffect *tower1effect, *tower2effect, *tower3effect, *hitenemyeffect, *wineffect, *loseeffect, *enemydieeffect, *notenoughsuneffect;
+    QSoundEffect *tower1effect, *tower2effect, *tower3effect, *hitenemyeffect, *wineffect, *loseeffect, *enemydieeffect, *notenoughsuneffect, *frozeneffect, *gainsunshineeffect, *buttonclickeffect, *zombiecomingeffect, *enemyathomeeffect;
 public:
     AudioManager();
     void setCore(Core *aCore);
@@ -29,6 +29,11 @@ public:
     void playLose();
     void playEnemyDie();
     void playNotEnoughSun();
+    void playFrozen();
+    void playGainSunshine();
+    void playButtonClick();
+    void playZombieComing();
+    void playEnemyAtHome();
 };
 
 #endif // AUDIO_H

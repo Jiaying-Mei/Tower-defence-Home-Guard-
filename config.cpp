@@ -11,8 +11,8 @@ void View_Info::build(double wratio, double hratio) {
 }
 
 GUI_MI::GUI_MI() {
-    this->debug_x = 0;
-    this->debug_y = 0;
+    this->debug_x = 2;
+    this->debug_y = 2;
 }
 
 void GUI_MI::build(double wratio, double hratio) {
@@ -157,11 +157,15 @@ void GUI_Game::build(double wratio, double hratio) {
     this->progressbarhead_height = (int)(160*hratio);
     this->progressbarhead_x = (int)(895*wratio);
     this->progressbarhead_dx = (int)(90*wratio);
+    this->rangeof_width = (int)(200*wratio);
+    this->rangeof_height = (int)(200*hratio);
+    this->rangeof_x = (int)(2800*wratio);
+    this->rangeof_y = (int)(1650*hratio);
 }
 
 GUI_Level1::GUI_Level1() {
-    this->initialcoin = 500;
-    this->initialhealth = 10;
+    this->initialcoin = 50;
+    this->initialhealth = 20;
     this->tower_cnt = 6;
     this->towerscenter = (AcidPoint*)malloc(sizeof(AcidPoint)*6);
     this->towerscenter[0] = AcidPoint(2743, 531);
@@ -170,12 +174,38 @@ GUI_Level1::GUI_Level1() {
     this->towerscenter[3] = AcidPoint(2292, 1707);
     this->towerscenter[4] = AcidPoint(2247, 1098);
     this->towerscenter[5] = AcidPoint(868, 1419);
+    this->waves.push_back(Wave("ZombieComingEffect", 200, -1));
     this->waves.push_back(Wave("Enemy1", 300, 0));
-    this->waves.push_back(Wave("Enemy2", 400, 0));
-    this->waves.push_back(Wave("Enemy1", 500, 0));
-    this->waves.push_back(Wave("Enemy1", 800, 0));
-    this->waves.push_back(Wave("Enemy1", 850, 0));
-    this->waves.push_back(Wave("Enemy3", 900, 0));
+    this->waves.push_back(Wave("ZombieComingEffect", 900, -1));
+    this->waves.push_back(Wave("Enemy1", 1000, 0));
+    this->waves.push_back(Wave("ZombieComingEffect", 1600, -1));
+    this->waves.push_back(Wave("Enemy1", 1700, 0));
+    this->waves.push_back(Wave("Enemy1", 1900, 0));
+    this->waves.push_back(Wave("Enemy1", 2100, 0));
+    this->waves.push_back(Wave("Enemy1", 2300, 0));
+    this->waves.push_back(Wave("Enemy1", 2500, 0));
+    this->waves.push_back(Wave("Enemy2", 2800, 0));
+    this->waves.push_back(Wave("ZombieComingEffect", 3500, -1));
+    this->waves.push_back(Wave("Enemy1", 3600, 0));
+    this->waves.push_back(Wave("Enemy2", 3700, 0));
+    this->waves.push_back(Wave("Enemy1", 3800, 0));
+    this->waves.push_back(Wave("Enemy2", 3900, 0));
+    this->waves.push_back(Wave("Enemy1", 4000, 0));
+    this->waves.push_back(Wave("ZombieComingEffect", 4500, -1));
+    this->waves.push_back(Wave("Enemy3", 4600, 0));
+    this->waves.push_back(Wave("Enemy1", 4800, 0));
+    this->waves.push_back(Wave("Enemy2", 5000, 0));
+    this->waves.push_back(Wave("Enemy1", 5200, 0));
+    this->waves.push_back(Wave("Enemy2", 5400, 0));
+    this->waves.push_back(Wave("Enemy1", 5500, 0));
+    this->waves.push_back(Wave("Enemy1", 5550, 0));
+    this->waves.push_back(Wave("Enemy1", 5600, 0));
+    this->waves.push_back(Wave("Enemy2", 5800, 0));
+    this->waves.push_back(Wave("Enemy2", 5900, 0));
+    this->waves.push_back(Wave("Enemy2", 6000, 0));
+    this->waves.push_back(Wave("Enemy3", 6100, 0));
+    this->waves.push_back(Wave("Enemy1", 6150, 0));
+    this->waves.push_back(Wave("Enemy3", 6200, 0));
 }
 
 void GUI_Level1::build(double wratio, double hratio) {
@@ -209,7 +239,7 @@ AcidPoint GUI_Level1::getPos(int route, int pos) {
 }
 
 GUI_Level2::GUI_Level2() {
-    this->initialcoin = 300;
+    this->initialcoin = 50;
     this->initialhealth = 5;
     this->tower_cnt = 4;
     this->towerscenter = (AcidPoint*)malloc(sizeof(AcidPoint)*4);
@@ -217,17 +247,32 @@ GUI_Level2::GUI_Level2() {
     this->towerscenter[1] = AcidPoint(1474, 1128);
     this->towerscenter[2] = AcidPoint(684, 465);
     this->towerscenter[3] = AcidPoint(910, 1695);
-    this->waves.push_back(Wave("Enemy1", 200, 1));
-    this->waves.push_back(Wave("Enemy2", 300, 0));
-    this->waves.push_back(Wave("Enemy3", 400, 0));
-    this->waves.push_back(Wave("Enemy1", 500, 0));
-    this->waves.push_back(Wave("Enemy1", 600, 0));
-    this->waves.push_back(Wave("Enemy1", 700, 0));
-    this->waves.push_back(Wave("Enemy3", 800, 0));
-    this->waves.push_back(Wave("Enemy3", 850, 0));
+    this->waves.push_back(Wave("ZombieComingEffect", 200, -1));
+    this->waves.push_back(Wave("Enemy1", 300, -1));
+    this->waves.push_back(Wave("ZombieComingEffect", 800, -1));
     this->waves.push_back(Wave("Enemy1", 900, -1));
-    this->waves.push_back(Wave("Enemy1", 950, -1));
-    this->waves.push_back(Wave("Enemy1", 1000, -1));
+    this->waves.push_back(Wave("Enemy1", 1100, -1));
+    this->waves.push_back(Wave("Enemy1", 1400, -1));
+    this->waves.push_back(Wave("Enemy1", 1800, -1));
+    this->waves.push_back(Wave("ZombieComingEffect", 2500, -1));
+    this->waves.push_back(Wave("Enemy2", 2600, 1));
+    this->waves.push_back(Wave("Enemy2", 2800, 0));
+    this->waves.push_back(Wave("Enemy2", 3000, 1));
+    this->waves.push_back(Wave("ZombieComingEffect", 4000, -1));
+    this->waves.push_back(Wave("Enemy3", 4100, 1));
+    this->waves.push_back(Wave("Enemy1", 4200, 0));
+    this->waves.push_back(Wave("Enemy1", 4250, 1));
+    this->waves.push_back(Wave("Enemy1", 4300, 0));
+    this->waves.push_back(Wave("ZombieComingEffect", 5000, -1));
+    this->waves.push_back(Wave("Enemy2", 5100, -1));
+    this->waves.push_back(Wave("Enemy1", 5200, -1));
+    this->waves.push_back(Wave("Enemy3", 5300, -1));
+    this->waves.push_back(Wave("Enemy1", 5500, -1));
+    this->waves.push_back(Wave("Enemy1", 5600, -1));
+    this->waves.push_back(Wave("Enemy1", 5700, -1));
+    this->waves.push_back(Wave("Enemy1", 5800, -1));
+    this->waves.push_back(Wave("Enemy1", 5900, -1));
+    this->waves.push_back(Wave("Enemy1", 6000, -1));
 }
 
 void GUI_Level2::build(double wratio, double hratio) {
@@ -383,9 +428,9 @@ Bullets_Info::Bullets_Info() {
     this->bullet12->hitdistance = 80;
 
     this->bullet21 = new Bullet_Data;
-    this->bullet21->speed = 1;
+    this->bullet21->speed = 20;
     this->bullet21->damage = 75;
-    this->bullet21->duration = 5;
+    this->bullet21->duration = 25;
     this->bullet21->imageurl = ":/image/bullet21.png";
     this->bullet21->hiteffect = "hiteffect21";
     this->bullet21->bulletname = "bullet21";
@@ -403,7 +448,7 @@ Bullets_Info::Bullets_Info() {
     this->bullet31->hitdistance = 80;
     this->bullet32 = new Bullet_Data;
     this->bullet32->speed = 20;
-    this->bullet32->damage = 50;
+    this->bullet32->damage = 30;
     this->bullet32->duration = 50;
     this->bullet32->imageurl = ":/image/bullet32.gif";
     this->bullet32->hiteffect = "hiteffect32";
@@ -474,6 +519,21 @@ HitEffect_Data* HitEffect_Info::getHitEffect(string targethiteffectname) {
     return NULL;
 }
 
+CircularAnimation_Info::CircularAnimation_Info() {
+    this->tower2cad = new CircularAnimation_Data;
+    this->tower2cad->circularanimationname = "tower2ca";
+    this->tower2cad->imageurl = ":/image/tower2circularanimation.png";
+    this->tower2cad->duration = 50;
+    this->tower2cad->ir = 150;
+    this->tower2cad->dr = 300;
+}
+
+CircularAnimation_Data* CircularAnimation_Info::getCircularAnimation(string targetcircularanimationname) {
+    if (targetcircularanimationname=="tower2ca")
+        return this->tower2cad;
+    return NULL;
+}
+
 Config::Config() {
     this->vi = new View_Info;
     this->gmi = new GUI_MI;
@@ -486,6 +546,7 @@ Config::Config() {
     this->esi = new Enemies_Info;
     this->bsi = new Bullets_Info;
     this->hei = new HitEffect_Info;
+    this->cai = new CircularAnimation_Info;
 }
 
 void Config::setCore(Core *aCore) {

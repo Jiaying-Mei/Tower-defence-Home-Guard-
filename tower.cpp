@@ -38,6 +38,20 @@ void Tower::resetNowTick() {
     this->nowtick = this->cooldown;
 }
 
+void Tower::refreshRangeAB(Core *aCore, AcidPoint tcap) {
+    if (!aCore->gamemanager->getIsShowRange()||this->type=="None"||this->level==0) {
+        this->rangeab->getItem()->setZValue(-1);
+        return;
+    }
+    this->rangeab->getItem()->setZValue(0);
+    int tr = this->getRange(aCore);
+    this->rangeab->refresh((int)((tcap.x-tr)*aCore->conf->nowwratio), (int)((tcap.y-tr)*aCore->conf->nowhratio), (int)(tr*2*aCore->conf->nowwratio), (int)(tr*2*aCore->conf->nowhratio));
+}
+
+AcidButton* Tower::getRangeAB() {
+    return this->rangeab;
+}
+
 void TowerManager::setCore(Core *aCore) {
     this->core = aCore;
 }
@@ -45,7 +59,11 @@ void TowerManager::setCore(Core *aCore) {
 void TowerManager::clear() {
     for (auto it = this->towers.begin(); it!=towers.end(); it++) {
         auto tmp = (*it);
-        if (tmp) this->core->menumanager->GameScene.removeItem(tmp->getItem());
+        if (tmp) {
+            this->core->menumanager->GameScene.removeItem(tmp->getItem());
+            this->core->menumanager->GameScene.removeItem(tmp->getRangeAB()->getItem());
+            free(tmp->getRangeAB());
+        }
         free(tmp);
     }
     towers.clear();
@@ -57,7 +75,7 @@ void TowerManager::run() {
 }
 
 bool isEInRange(AcidPoint p1, AcidPoint p2, int range) {
-    return (p1.x-p2.x)*(p1.x-p2.y)+(p1.y-p2.y)*(p1.y-p2.y)<=range*range;
+    return (p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y)<=range*range;
 }
 
 void TowerManager::checkTower2() {
@@ -69,6 +87,7 @@ void TowerManager::checkTower2() {
                 if (isEInRange(this->core->gamemanager->towerscenter[i], e->getCenter(this->core), t->getRange(this->core))) {
                     flag = true;
                     this->core->gamemanager->bulletmanager->addBullet(t->getBulletName(), i, e->getCenter(this->core));
+                    this->core->gamemanager->animationmanager->addCircularAnimation("tower2ca", this->core->gamemanager->towerscenter[i].x, this->core->gamemanager->towerscenter[i].y);
                 }
             if (flag)
                 t->resetNowTick();

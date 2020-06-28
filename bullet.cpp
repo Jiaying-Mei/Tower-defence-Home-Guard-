@@ -160,9 +160,12 @@ void BulletManager::checkHit() {
                     e->takeHP(b->getDamage());
                     b->remove(this->core);
                     this->core->gamemanager->hiteffectmanager->addHitEffect(b, e);
+                    if (b->getFrozen()==0)
+                        this->core->audiomanager->playHitEnemy();
+                    else
+                        this->core->audiomanager->playFrozen();
                     delete b;
                     flag = false;
-                    this->core->audiomanager->playHitEnemy();
                     break;
                 }
             if (flag)
